@@ -4,27 +4,25 @@ class CurrencyCard extends StatelessWidget {
   final String name, code, amount;
   final IconData icon;
   final bool isInverted;
-  final double order;
+  final num order;
 
-  final _blackColor = const Color(0xFF1F2123); //앞에 _는 private하게 쓰겠다는 거임
-  const CurrencyCard({
-    super.key,
-    required this.name,
-    required this.code,
-    required this.amount,
-    required this.icon,
-    required this.isInverted,
-    required this.order,
-  });
+  final _blackColor = const Color(0xFF1F2123);
+
+  const CurrencyCard(
+      {super.key,
+      required this.name,
+      required this.code,
+      required this.amount,
+      required this.icon,
+      required this.isInverted,
+      required this.order});
 
   @override
   Widget build(BuildContext context) {
     return Transform.translate(
-      offset: order == 1
-          ? const Offset(0, 0)
-          : Offset(0, (order - 1) * -20), //first index=1
+      offset: Offset(0, (order - 1) * -20),
       child: Container(
-        clipBehavior: Clip.hardEdge, //(로고)밖에 나간거 안보이게 함
+        clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
           color: isInverted ? Colors.white : _blackColor,
           borderRadius: BorderRadius.circular(25),
@@ -40,12 +38,13 @@ class CurrencyCard extends StatelessWidget {
                   Text(
                     name,
                     style: TextStyle(
-                        color: isInverted ? _blackColor : Colors.white,
-                        fontSize: 32,
-                        fontWeight: FontWeight.w600),
+                      color: isInverted ? _blackColor : Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
                   Row(
                     children: [
@@ -62,7 +61,9 @@ class CurrencyCard extends StatelessWidget {
                       Text(
                         code,
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.8),
+                          color: isInverted
+                              ? _blackColor
+                              : Colors.white.withOpacity(0.8),
                           fontSize: 20,
                         ),
                       ),
@@ -71,11 +72,12 @@ class CurrencyCard extends StatelessWidget {
                 ],
               ),
               Transform.scale(
-                //아이콘의 크기를 키우는데, 부모의 크기에 영향 안줌
                 scale: 2.2,
                 child: Transform.translate(
-                  //dispaly:absolute 랑 비슷
-                  offset: const Offset(-5, 10), //x로 8만큼 y로 15만큼
+                  offset: const Offset(
+                    -5,
+                    12,
+                  ),
                   child: Icon(
                     icon,
                     color: isInverted ? _blackColor : Colors.white,
